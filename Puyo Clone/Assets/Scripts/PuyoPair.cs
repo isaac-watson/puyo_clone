@@ -19,7 +19,7 @@ public class PuyoPair : MonoBehaviour {
         puyoPair = new GameObject[2];
         puyoPair[0] = RandomPuyo();
         puyoPair[1] = RandomPuyo();
-        isControlled = false;
+        isControlled = true;
         direction = PuyoDirection.NORTH;
         TranslatePuyo();
     }
@@ -28,6 +28,7 @@ public class PuyoPair : MonoBehaviour {
         if (isControlled == true)
         {
             GetInput();
+            
         }
     }
 

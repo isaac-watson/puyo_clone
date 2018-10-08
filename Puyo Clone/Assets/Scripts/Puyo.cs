@@ -17,6 +17,10 @@ public class Puyo : MonoBehaviour {
         y = 0;
         
     }
+    void Update()
+    {
+        transform.position -= transform.up * Time.deltaTime * 5;
+    }
 
     public int X
     {
