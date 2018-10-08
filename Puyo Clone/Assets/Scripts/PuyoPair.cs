@@ -5,31 +5,25 @@ using UnityEngine;
 public class PuyoPair : MonoBehaviour {
     //
     private GameObject[] puyoPair;
-    public GameObject puyo0;
-    public GameObject puyo1;
-    public GameObject puyo2;
-    public GameObject puyo3;
-    public GameObject puyo4;
+    public GameObject[] puyoList;
     private bool isControlled;
     public enum PuyoDirection { NORTH, SOUTH, EAST, WEST };
     private PuyoDirection direction;
 
     void Start()
     {
-        puyoPair = new GameObject[2];
-        puyoPair[0] = RandomPuyo();
-        puyoPair[1] = RandomPuyo();
-        isControlled = true;
-        direction = PuyoDirection.NORTH;
-        TranslatePuyo();
+        
     }
+
     void Update()
     {
         if (isControlled == true)
         {
+            
             GetInput();
             
         }
+        
     }
 
     public bool GetIsControlled()
@@ -40,38 +34,49 @@ public class PuyoPair : MonoBehaviour {
     {
         this.isControlled = isControlled;
     }
-    public GameObject RandomPuyo()
+    public GameObject RandomPuyo(Vector3 Position)
     {
         GameObject puyo = null;
         int num = Random.Range(0, 5);
         switch (num)
         {
             case 0: //red
-                puyo = GameObject.Instantiate(puyo0);
+                puyo = Instantiate(puyoList[0], Position, Quaternion.identity) as GameObject;
                 break;
             case 1: //blue
-                puyo = GameObject.Instantiate(puyo1);
+                puyo = Instantiate(puyoList[1], Position, Quaternion.identity) as GameObject;
                 break;
             case 2: //yellow
-                puyo = GameObject.Instantiate(puyo2);
+                puyo = Instantiate(puyoList[2], Position, Quaternion.identity) as GameObject;
                 break;
             case 3: //green
-                puyo = GameObject.Instantiate(puyo3);
+                puyo = Instantiate(puyoList[3], Position, Quaternion.identity) as GameObject;
                 break;
             case 4: //purple
-                puyo = GameObject.Instantiate(puyo4);
+                puyo = Instantiate(puyoList[4], Position, Quaternion.identity) as GameObject;
                 break;
         }
-
+        
         return puyo;
     }
-    private void TranslatePuyo()
+    public void InstantiatePair()
     {
-        if (direction == PuyoDirection.NORTH)
+        puyoPair = new GameObject[2];
+        direction = PuyoDirection.NORTH;
+        if (isControlled == true)
         {
-            puyoPair[0].transform.position = new Vector3(0, 1, 0);
+            puyoPair[0] = RandomPuyo(new Vector3(-9.5f, 6.5f, 0));
+            puyoPair[0].GetComponent<Puyo>().State = Puyo.PuyoState.IN_PLAY;
+            puyoPair[1] = RandomPuyo(new Vector3(-9.5f, 5.5f, 0));
+            puyoPair[1].GetComponent<Puyo>().State = Puyo.PuyoState.IN_PLAY;
         }
-
+        if (isControlled == false)
+        {
+            puyoPair[0] = RandomPuyo(new Vector2(-4.5f, 6.5f));
+            
+            puyoPair[1] = RandomPuyo(new Vector3(-4.5f, 5.5f, 0));
+        
+        }
         
     }
     private void GetInput()
@@ -80,47 +85,47 @@ public class PuyoPair : MonoBehaviour {
         {
             if (direction == PuyoDirection.SOUTH)
             {
-                direction = PuyoDirection.WEST;
-                puyoPair[0].transform.position = new Vector3(-1, 0, 0);
-                //puyoPair[1].transform.position = Vector3.MoveTowards(transform.position, new Vector3(0, 1, 0), Time.deltaTime*2);
+                direction = PuyoDirection.EAST;
+                
+               
             }
            else if (direction == PuyoDirection.WEST)
             {
                 direction = PuyoDirection.NORTH;
-                puyoPair[0].transform.position = new Vector3(0, 1, 0);
+                
             }
            else if (direction == PuyoDirection.NORTH)
             {
-                direction = PuyoDirection.EAST;
-                puyoPair[0].transform.position = new Vector3(1, 0, 0);
+                direction = PuyoDirection.WEST;
+                
             }
            else if (direction == PuyoDirection.EAST)
             {
-                direction = PuyoDirection.SOUTH;
-                puyoPair[0].transform.position = new Vector3(0, -1, 0);
+                direction = PuyoDirection.NORTH;
+                
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha1)) //Rotate clockwise
         {
             if (direction == PuyoDirection.SOUTH)
             {
-                direction = PuyoDirection.EAST;
-                puyoPair[0].transform.position = new Vector3(1, 0, 0);
+                direction = PuyoDirection.WEST;
+               
             }
             else if (direction == PuyoDirection.EAST)
             {
-                direction = PuyoDirection.NORTH;
-                puyoPair[0].transform.position = new Vector3(0, 1, 0);
+                direction = PuyoDirection.SOUTH;
+               
             }
             else if (direction == PuyoDirection.NORTH)
             {
-                direction = PuyoDirection.WEST;
-                puyoPair[0].transform.position = new Vector3(-1, 0, 0);
+                direction = PuyoDirection.EAST;
+                
             }
             else if (direction == PuyoDirection.WEST)
             {
-                direction = PuyoDirection.SOUTH;
-                puyoPair[0].transform.position = new Vector3(0, -1, 0);
+                direction = PuyoDirection.NORTH;
+               
             }
         }
     }
