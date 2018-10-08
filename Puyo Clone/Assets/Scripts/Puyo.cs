@@ -2,14 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Puyo {
+public class Puyo : MonoBehaviour {
 
     public enum PuyoColor { RED, BLUE, YELLOW, GREEN, PURPLE };
-    private PuyoColor puyoColor;
+    [SerializeField]
+    protected PuyoColor puyoColor;
     
     //Position with respect to board puyo array
     private int x, y;
-    
+
+    void Start()
+    {
+        x = 3;
+        y = 0;
+        
+    }
+
     public int X
     {
         get { return x; }
@@ -27,14 +35,4 @@ public class Puyo {
         get { return puyoColor; }
         set { puyoColor = value; }
     }
-
-	public Puyo(PuyoColor puyoColor)
-    {
-        x = 3;
-        y = 0;
-        this.puyoColor = puyoColor;
-    }
-
-
-    
 }
