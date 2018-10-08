@@ -28,7 +28,7 @@ public class Board : MonoBehaviour {
         pairSet[0] = pairSet[1];
         pairSet[0].GetComponent<PuyoPair>().SetIsControlled(true);
         pairSet[0].GetComponent<PuyoPair>().InstantiatePair();
-        //GenerateNextPair();
+        
     }
     //The pair to replace in board's puyoPairs
     private void GenerateNextPair()
